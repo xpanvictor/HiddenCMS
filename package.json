@@ -4,7 +4,9 @@
   "description": "Hidden cms is my attempt to replicate the ghost cms and also make one that can provide some features ghost cms lacks. I want to make this so cool and then apply *** ghost cms.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx tsc",
+    "start": "node /build/index.js",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/index.js\""
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,8 @@
   "devDependencies": {
     "@types/express": "^4.17.14",
     "@types/node": "^18.7.23",
+    "concurrently": "^7.4.0",
+    "nodemon": "^2.0.20",
     "typescript": "^4.8.4"
   }
 }
