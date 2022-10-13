@@ -11,7 +11,7 @@ class App {
         this.config()
         this.applyRouters()
         this.app.use('/', (_, res: Response) => {
-            res.send('Welcome to the authentication service dev container')
+            res.send('Welcome to the server service dev container')
         })
     }
 
