@@ -32,7 +32,7 @@ export default class BaseController {
 
     public populateData(data: Partial<Reply>) {
         this._data = {
-            status: data.status || Status.NotFound,
+            status: data.status || Status.ServerError,
             message: data.message || 'No response from server, try again later!',
             value: data.value || {}
         }
