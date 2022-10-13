@@ -2,6 +2,7 @@ import express, {Application, Request, Response, NextFunction} from 'express'
 const bodyParser = require('body-parser')
 //routes
 const UserRouter = require('./routes/user')
+const PostRouter = require('./routes/post')
 
 class App {
     app: Application
@@ -33,6 +34,7 @@ class App {
 
     private applyRouters() {
         new UserRouter(this.app)
+        new PostRouter(this.app)
     }
 }
 

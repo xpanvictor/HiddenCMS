@@ -1,15 +1,5 @@
 import {Request, Response, NextFunction} from "express";
-
-enum Status {
-    ServerError= 500,
-    Success = 200,
-    NewData = 201,
-    Cached = 301,
-    BadRequest = 400,
-    Unauthorized = 401,
-    InvalidSession = 403,
-    NotFound = 404,
-}
+const {Status} = require('../constants/enums')
 
 interface Reply {
     status: Status,
@@ -30,17 +20,17 @@ export default class BaseController {
         this.next = next
     }
 
-    public populateData(data: Partial<Reply>) {
+    public populateData(status?: Status, message?: string, value?: any) {
         this._data = {
-            status: data.status || Status.ServerError,
-            message: data.message || 'No response from server, try again later!',
-            value: data.value || {}
+            status: status || Status.ServerError,
+            message: message || 'No response from server, try again later!',
+            value: value || {}
         }
     }
 
     public respond() {
         if (!this._data.status) {
-            this.populateData({})
+            this.populateData()
         }
         this.res.json(this._data)
     }
