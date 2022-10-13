@@ -1,0 +1,17 @@
+version: "3"
+services:
+  mongo:
+    image: mongo:latest
+
+  server:
+    build:
+      context: services/server
+    volumes:
+      - ./services/server:/app
+      - /app/node_modules
+    ports:
+      - "4015:4015"
+    environment:
+      - port=4015
+    depends_on:
+      - mongo

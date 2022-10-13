@@ -2,11 +2,13 @@ require('dotenv').config()
 
 const http = require('http')
 const app = require('./Main')
-
+const {handleUnhandledRejection, handleUncaughtExceptions} = require('./error/serverError')
 
 const server = http.createServer(app)
 
 async function startServer () {
+    handleUnhandledRejection(server)
+    handleUncaughtExceptions()
     server.listen(process.env.PORT, () => console.log('😎Hidden cms v1.0 running at port:', process.env.PORT))
 }
 
