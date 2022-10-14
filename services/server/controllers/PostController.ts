@@ -13,14 +13,19 @@ class PostController extends BaseController {
         return this.respond()
     }
 
-    public create_post() {
-        const {title} = this.req.body
+    public async create_post() {
+        const {title, excerpt, _html,} = this.req.body
+        if (!title || !_html) {
+            this.populateData(Status.BadRequest, "Required fields not filled!")
+            return this.respond()
+        }
         const post = new Post({
-
+            title,
+            excerpt,
+            _html
         })
-        post.save()
-        console.log("post", post)
-        this.populateData(200, "Res", title)
+        const saved_post = await post.save()
+        this.populateData(Status.NewData, "Post saved successfully", saved_post)
         this.respond()
     }
 }

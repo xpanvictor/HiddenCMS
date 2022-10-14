@@ -1,5 +1,8 @@
 import express, {Application, Request, Response, NextFunction} from 'express'
+//middlewares_essential
 const bodyParser = require('body-parser')
+const mongoSanitize = require('express-mongo-sanitize')
+import helmet from 'helmet'
 //routes
 const UserRouter = require('./routes/user')
 const PostRouter = require('./routes/post')
@@ -28,6 +31,8 @@ class App {
         this.app.use(bodyParser.urlencoded({
             extended: false
         }))
+        this.app.use(helmet())
+        this.app.use(mongoSanitize())
         console.log('Testing dependent database service')
 
     }
