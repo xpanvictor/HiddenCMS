@@ -22,7 +22,7 @@ const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
         index: true,
         validate: {
             validator: (v: string) => /\w*\s\w*/i.test(v),
-            message: 'Please enter full first name!'
+            message: 'Please enter full name!'
         }
     },
     email: {

@@ -1,4 +1,5 @@
-import {Application, Router, Request, Response} from "express";
+import {Application, Router} from "express";
+const UserController = require('../controllers/UserController')
 
 class UserRouter {
     router: Router
@@ -10,9 +11,7 @@ class UserRouter {
     }
 
     private applyRoutes() {
-        this.router.use('/', (req: Request, res: Response) => {
-            res.send('Hello user')
-        })
+        this.router.post('/', (...args) => new UserController(...args).createUser())
     }
 }
 
