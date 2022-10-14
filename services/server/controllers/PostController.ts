@@ -8,8 +8,22 @@ class PostController extends BaseController {
         super(req, res, next);
     }
 
-    public get posts() {
-        this.populateData(Status.Success, 'All posts generated')
+    public async posts() {
+        let {page, size} = <{page: number, size: number}><unknown>this.req.query
+        size = size || 10
+        const posts = await Post.find(
+            {},
+            {title: 1, excerpt: 1, likes: 1, tags: 1, updatedAt: 1},
+            {skip: (page -  1 || 0) * size, limit: size, sort: {updatedAt: -1}}
+        )
+        this.populateData(Status.Success, 'All posts generated', posts)
+        return this.respond()
+    }
+
+    public async postById() {
+        const {id} = this.req.params
+        const post = await Post.findOne({_id: id})
+        this.populateData(Status.Success, `Post with id ${id}`, post)
         return this.respond()
     }
 

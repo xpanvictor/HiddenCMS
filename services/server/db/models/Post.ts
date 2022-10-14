@@ -50,7 +50,14 @@ const PostSchema = new Schema<IPost>({
                 default: Date.now()
             }
         }
-    ]
+    ],
+    likes: {
+        type: Number,
+        default: 0
+    },
+    tags: {
+        type: [String]
+    }
 }, {
     timestamps: true,
     toJSON: {
