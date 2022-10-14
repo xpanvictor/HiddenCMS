@@ -59,6 +59,11 @@ const PostSchema = new Schema<IPost>({
         type: [String]
     }
 }, {
+    query: {
+        searchWithTitle(title: string) {
+            return this.where({ title: new RegExp(title, 'i')})
+        }
+    },
     timestamps: true,
     toJSON: {
         virtuals: true
@@ -67,6 +72,5 @@ const PostSchema = new Schema<IPost>({
         virtuals: true
     }
 })
-
 
 module.exports = mongoose.model<IPost>('Post', PostSchema)

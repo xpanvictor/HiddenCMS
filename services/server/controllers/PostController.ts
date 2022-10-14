@@ -9,13 +9,16 @@ class PostController extends BaseController {
     }
 
     public async posts() {
-        let {page, size} = <{page: number, size: number}><unknown>this.req.query
+        let {page, size, search} = <{page: number, size: number, search?: string}><unknown>this.req.query
         size = size || 10
+
         const posts = await Post.find(
             {},
             {title: 1, excerpt: 1, likes: 1, tags: 1, updatedAt: 1},
-            {skip: (page -  1 || 0) * size, limit: size, sort: {updatedAt: -1}}
-        )
+            //absolute value for security of passing negative num, haha
+            {skip: Math.abs(page -  1 || 0) * size, limit: size, sort: {updatedAt: -1}}
+        ).searchWithTitle(search)
+
         this.populateData(Status.Success, 'All posts generated', posts)
         return this.respond()
     }
