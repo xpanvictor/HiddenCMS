@@ -12,6 +12,7 @@ class PostRouter {
 
     private applyRoutes() {
         this.router.get('/', (...args) => new PostController(...args).posts())
+        this.router.post('/', (...args) => new PostController(...args).create_post())
     }
 }
 

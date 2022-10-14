@@ -4,7 +4,7 @@ const configConstants = require('../constants/config')
 async function ConnectDB() {
     try {
         console.log(configConstants.MONGO_URI)
-        await mongoose.connect(configConstants.MONGO_URI, {
+        await mongoose.connect(configConstants.MONGO_URI + '/hidden', {
             autoIndex: false
         })
         console.log('DB connected!')
