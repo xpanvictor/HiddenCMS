@@ -20,6 +20,7 @@ class UserController extends BaseController {
             const saved_user = await user.save()
             this.populateData(Status.NewData, `User ${name} has been created`, saved_user)
         }catch(err: any) {
+            console.log(err)
             this.populateData(Status.BadRequest, 'Invalid data', err)
         }
         this.respond()
