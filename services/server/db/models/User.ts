@@ -10,7 +10,7 @@ interface IUser {
 }
 
 interface IUserMethods {
-    comparePassword(password: string): boolean
+    comparePassword(password: string): Promise<boolean>
 }
 
 type UserModel = Model<IUser, {}, IUserMethods>
@@ -60,8 +60,8 @@ UserSchema.pre('save', async function(next) {
     }
 })
 
-UserSchema.methods.comparePassword = function(password) {
-    return bcrypt.compare(password, this.password)
+UserSchema.methods.comparePassword = async function(password) {
+    return await bcrypt.compare(password, this.password)
 }
 
 module.exports = mongoose.model<IUser, UserModel>('User', UserSchema)

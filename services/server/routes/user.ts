@@ -12,6 +12,7 @@ class UserRouter {
 
     private applyRoutes() {
         this.router.post('/', (...args) => new UserController(...args).createUser())
+        this.router.post('/login', (...args) => new UserController(...args).loginUser())
     }
 }
 

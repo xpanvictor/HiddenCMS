@@ -25,6 +25,21 @@ class UserController extends BaseController {
         }
         this.respond()
     }
+
+    public async loginUser() {
+        const {email, password} = this.req.body
+        const user_requested = await User.findOne({email})
+        if (!user_requested) {
+            this.populateData(Status.NotFound, 'User not found')
+            return this.respond()
+        }
+        if (await user_requested.comparePassword(password)) {
+            this.populateData(Status.Success, `${email} logged in`, user_requested)
+        }else{
+            this.populateData(Status.BadRequest, 'Incorrect details')
+        }
+        return this.respond()
+    }
 }
 
 module.exports = UserController
