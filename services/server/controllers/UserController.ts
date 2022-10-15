@@ -28,16 +28,19 @@ class UserController extends BaseController {
 
     public async loginUser() {
         const {email, password} = this.req.body
-        const user_requested = await User.findOne({email})
-        if (!user_requested) {
-            this.populateData(Status.NotFound, 'User not found')
-            return this.respond()
-        }
-        if (await user_requested.comparePassword(password)) {
-            this.populateData(Status.Success, `${email} logged in`, user_requested)
-        }else{
-            this.populateData(Status.BadRequest, 'Incorrect details')
-        }
+        //todo: use a query helper to handle login from mongoose!
+        const user_requested = await (await User.findOne({email})).login(password)
+        this.populateData(Status.Success, 'Heuy', user_requested)
+        // if (!user_requested) {
+        //     this.populateData(Status.NotFound, 'User not found')
+        //     return this.respond()
+        // }
+        // console.log(await user_requested.login(password))
+        // if (await user_requested.comparePassword(password)) {
+        //     this.populateData(Status.Success, `${email} logged in`, user_requested.projection({password: 0}))
+        // }else{
+        //     this.populateData(Status.BadRequest, 'Incorrect details')
+        // }
         return this.respond()
     }
 }

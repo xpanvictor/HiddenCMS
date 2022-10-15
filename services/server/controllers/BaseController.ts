@@ -2,7 +2,7 @@ import {Request, Response, NextFunction} from "express";
 const {Status} = require('../constants/enums')
 
 interface Reply {
-    status: Status,
+    status: typeof Status,
     message: string
     value: Record<string, any>
 }
@@ -20,7 +20,7 @@ export default class BaseController {
         this.next = next
     }
 
-    public populateData(status?: Status, message?: string, value?: any) {
+    public populateData(status?: typeof Status, message?: string, value?: any) {
         this._data = {
             status: status || Status.ServerError,
             message: message || 'No response from server, try again later!',

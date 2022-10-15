@@ -10,7 +10,8 @@ interface IUser {
 }
 
 interface IUserMethods {
-    comparePassword(password: string): Promise<boolean>
+    comparePassword(password: string): Promise<boolean>,
+    login(password: string): any
 }
 
 type UserModel = Model<IUser, {}, IUserMethods>
@@ -62,6 +63,15 @@ UserSchema.pre('save', async function(next) {
 
 UserSchema.methods.comparePassword = async function(password) {
     return await bcrypt.compare(password, this.password)
+}
+
+UserSchema.methods.login = async function(password) {
+    const isUser = await this.comparePassword(password)
+    //methods cant fix login, query helpers will be better.
+    if (isUser) {
+        return this.select('-password')
+    }
+    return null
 }
 
 module.exports = mongoose.model<IUser, UserModel>('User', UserSchema)
